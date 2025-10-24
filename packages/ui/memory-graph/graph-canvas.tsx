@@ -12,7 +12,6 @@ import { colors } from "./constants";
 import type {
 	DocumentWithMemories,
 	GraphCanvasProps,
-	GraphNode,
 	MemoryEntry,
 } from "./types";
 

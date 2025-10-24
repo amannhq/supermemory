@@ -205,7 +205,7 @@ function Cursor({ actions, className, onPositionChange }: CursorProps) {
 			})
 			timeoutsRef.current = []
 		}
-	}, [actions])
+	}, [actions, moveToElement, moveToPercent, setPositionByPercent])
 
 	return (
 		<div
@@ -306,51 +306,48 @@ function SnippetDemo() {
 		return null
 	}
 
-	useLayoutEffect(
-		function setupCharRectsMeasurement() {
-			function measureCharRects(): void {
-				if (!sentenceRef.current) {
-					charRectsRef.current = []
-					return
-				}
-				const spans = sentenceRef.current.querySelectorAll("span[data-idx]")
-				const rects: DOMRect[] = []
-				spans.forEach(function collect(node) {
-					rects.push((node as HTMLElement).getBoundingClientRect())
-				})
-				charRectsRef.current = rects
+	useLayoutEffect(function setupCharRectsMeasurement() {
+		function measureCharRects(): void {
+			if (!sentenceRef.current) {
+				charRectsRef.current = []
+				return
 			}
+			const spans = sentenceRef.current.querySelectorAll("span[data-idx]")
+			const rects: DOMRect[] = []
+			spans.forEach(function collect(node) {
+				rects.push((node as HTMLElement).getBoundingClientRect())
+			})
+			charRectsRef.current = rects
+		}
 
-			measureCharRects()
+		measureCharRects()
 
-			let ro1: ResizeObserver | null = null
-			let ro2: ResizeObserver | null = null
-			if (typeof ResizeObserver !== "undefined") {
-				ro1 = new ResizeObserver(function onResize() {
-					measureCharRects()
-				})
-				ro2 = new ResizeObserver(function onResize() {
-					measureCharRects()
-				})
-				if (snippetRootRef.current) ro1.observe(snippetRootRef.current)
-				if (sentenceRef.current) ro2.observe(sentenceRef.current)
-			}
-
-			function onScroll(): void {
+		let ro1: ResizeObserver | null = null
+		let ro2: ResizeObserver | null = null
+		if (typeof ResizeObserver !== "undefined") {
+			ro1 = new ResizeObserver(function onResize() {
 				measureCharRects()
-			}
-			window.addEventListener("resize", measureCharRects)
-			window.addEventListener("scroll", onScroll, true)
+			})
+			ro2 = new ResizeObserver(function onResize() {
+				measureCharRects()
+			})
+			if (snippetRootRef.current) ro1.observe(snippetRootRef.current)
+			if (sentenceRef.current) ro2.observe(sentenceRef.current)
+		}
 
-			return function cleanup(): void {
-				if (ro1) ro1.disconnect()
-				if (ro2) ro2.disconnect()
-				window.removeEventListener("resize", measureCharRects)
-				window.removeEventListener("scroll", onScroll, true)
-			}
-		},
-		[targetText],
-	)
+		function onScroll(): void {
+			measureCharRects()
+		}
+		window.addEventListener("resize", measureCharRects)
+		window.addEventListener("scroll", onScroll, true)
+
+		return function cleanup(): void {
+			if (ro1) ro1.disconnect()
+			if (ro2) ro2.disconnect()
+			window.removeEventListener("resize", measureCharRects)
+			window.removeEventListener("scroll", onScroll, true)
+		}
+	}, [])
 
 	useEffect(function setupActionsOnce() {
 		lastStableIndexRef.current = 0

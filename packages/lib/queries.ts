@@ -14,9 +14,7 @@ export const fetchSubscriptionStatus = (
 ) =>
 	useQuery({
 		queryFn: async () => {
-			const allPlans = [
-				"consumer_pro",
-			]
+			const allPlans = ["consumer_pro"]
 			const statusMap: Record<string, boolean | null> = {}
 
 			await Promise.all(
@@ -42,7 +40,10 @@ export const fetchSubscriptionStatus = (
 	})
 
 // Feature checks
-export const fetchMemoriesFeature = (autumn: ReturnType<typeof useCustomer>, isEnabled: boolean) =>
+export const fetchMemoriesFeature = (
+	autumn: ReturnType<typeof useCustomer>,
+	isEnabled: boolean,
+) =>
 	useQuery({
 		queryFn: async () => {
 			const res = autumn.check({ featureId: "memories" })

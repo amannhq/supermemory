@@ -39,7 +39,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY ?? "", {
-				api_host: process.env.NEXT_PUBLIC_BACKEND_URL + "/orange",
+				api_host: `${process.env.NEXT_PUBLIC_BACKEND_URL}/orange`,
 				ui_host: "https://us.i.posthog.com",
 				person_profiles: "identified_only",
 				capture_pageview: false,
@@ -70,7 +70,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 	)
 }
 
-function getPageType(pathname: string): string {
+function getPageType(_pathname: string): string {
 	return "other"
 }
 

@@ -2,12 +2,12 @@ export interface ProfileStructure {
 	profile: {
 		static?: string[]
 		dynamic?: string[]
-	},
+	}
 	searchResults: {
 		results: [
 			{
-				memory: string,
-			}
+				memory: string
+			},
 		]
 	}
 }

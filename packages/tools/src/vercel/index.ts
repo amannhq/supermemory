@@ -3,10 +3,10 @@ import { wrapLanguageModel } from "ai"
 import { createSupermemoryMiddleware } from "./middleware"
 
 interface WrapVercelLanguageModelOptions {
-	conversationId?: string;
-	verbose?: boolean;
-	mode?: "profile" | "query" | "full";
-	addMemory?: "always" | "never";
+	conversationId?: string
+	verbose?: boolean
+	mode?: "profile" | "query" | "full"
+	addMemory?: "always" | "never"
 }
 
 /**
@@ -65,10 +65,19 @@ const wrapVercelLanguageModel = (
 
 	const wrappedModel = wrapLanguageModel({
 		model,
-		middleware: createSupermemoryMiddleware(containerTag, conversationId, verbose, mode, addMemory),
+		middleware: createSupermemoryMiddleware(
+			containerTag,
+			conversationId,
+			verbose,
+			mode,
+			addMemory,
+		),
 	})
 
 	return wrappedModel
 }
 
-export { wrapVercelLanguageModel as withSupermemory, type WrapVercelLanguageModelOptions as WithSupermemoryOptions }
+export {
+	wrapVercelLanguageModel as withSupermemory,
+	type WrapVercelLanguageModelOptions as WithSupermemoryOptions,
+}

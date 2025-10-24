@@ -139,7 +139,7 @@ export function OnboardingProvider({
 			const targetStep = nextAfterBase ?? visibleSteps[visibleSteps.length - 1]!
 			setCurrentStep(targetStep)
 		}
-	}, [visibleSteps, currentStep])
+	}, [visibleSteps, currentStep, setCurrentStep])
 
 	function setStep(step: OnboardingStep) {
 		setCurrentStep(step)
@@ -194,7 +194,7 @@ export function OnboardingProvider({
 	)
 	const currentVisibleStepNumber = useMemo(
 		() => getStepNumberFor(currentStep),
-		[currentStep, stepsForNumbering],
+		[currentStep, getStepNumberFor],
 	)
 	const totalSteps = stepsForNumbering.length
 

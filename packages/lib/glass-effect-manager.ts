@@ -109,15 +109,15 @@ class GlassEffectManager {
 		`
 
 		const createShader = (type: number, source: string) => {
-			const shader = this.gl!.createShader(type)
+			const shader = this.gl?.createShader(type)
 			if (!shader) return null
 
-			this.gl!.shaderSource(shader, source)
-			this.gl!.compileShader(shader)
+			this.gl?.shaderSource(shader, source)
+			this.gl?.compileShader(shader)
 
-			if (!this.gl!.getShaderParameter(shader, this.gl!.COMPILE_STATUS)) {
-				console.error("Shader error:", this.gl!.getShaderInfoLog(shader))
-				this.gl!.deleteShader(shader)
+			if (!this.gl?.getShaderParameter(shader, this.gl?.COMPILE_STATUS)) {
+				console.error("Shader error:", this.gl?.getShaderInfoLog(shader))
+				this.gl?.deleteShader(shader)
 				return null
 			}
 			return shader
@@ -233,8 +233,8 @@ class GlassEffectManager {
 
 				// Set canvas size if needed
 				if (
-					this.canvas!.width !== effect.width ||
-					this.canvas!.height !== effect.height
+					this.canvas?.width !== effect.width ||
+					this.canvas?.height !== effect.height
 				) {
 					this.canvas!.width = effect.width
 					this.canvas!.height = effect.height

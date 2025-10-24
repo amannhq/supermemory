@@ -1,6 +1,6 @@
 import { generateText, type ModelMessage } from "ai"
 import { openai } from "@ai-sdk/openai"
-import { withSupermemory } from "../../../../../src/vercel"		
+import { withSupermemory } from "../../../../../src/vercel"
 
 const model = withSupermemory(openai("gpt-4"), "user-123", {
 	mode: "full",
@@ -8,7 +8,6 @@ const model = withSupermemory(openai("gpt-4"), "user-123", {
 	conversationId: "chat-session",
 	verbose: true,
 })
-
 
 export async function POST(req: Request) {
 	const { messages }: { messages: ModelMessage[] } = await req.json()

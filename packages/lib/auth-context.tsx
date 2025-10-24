@@ -49,22 +49,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 			if (pendingMethod) {
 				const now = Date.now()
-				const ts = pendingTsRaw ? Number.parseInt(pendingTsRaw, 10) : NaN
+				const ts = pendingTsRaw ? Number.parseInt(pendingTsRaw, 10) : Number.NaN
 				const isFresh = Number.isFinite(ts) && now - ts < 10 * 60 * 1000 // 10 minutes TTL
 
 				if (isFresh) {
-					localStorage.setItem(
-						"supermemory-last-login-method",
-						pendingMethod,
-					)
+					localStorage.setItem("supermemory-last-login-method", pendingMethod)
 				}
 			}
-		} catch { }
+		} catch {}
 		// Always clear pending markers once a session is present
 		try {
 			localStorage.removeItem("supermemory-pending-login-method")
 			localStorage.removeItem("supermemory-pending-login-timestamp")
-		} catch { }
+		} catch {}
 	}, [session?.session])
 
 	const setActiveOrg = async (slug: string) => {

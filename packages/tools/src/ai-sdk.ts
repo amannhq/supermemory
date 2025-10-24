@@ -21,35 +21,42 @@ export const searchMemoriesTool = (
 
 	const containerTags = getContainerTags(config)
 
+	const schema = z.object({
+		informationToGet: z
+			.string()
+			.describe(PARAMETER_DESCRIPTIONS.informationToGet),
+		includeFullDocs: z
+			.boolean()
+			.optional()
+			.default(DEFAULT_VALUES.includeFullDocs)
+			.describe(PARAMETER_DESCRIPTIONS.includeFullDocs),
+		limit: z
+			.number()
+			.optional()
+			.default(DEFAULT_VALUES.limit)
+			.describe(PARAMETER_DESCRIPTIONS.limit),
+	})
+
 	return tool({
 		description: TOOL_DESCRIPTIONS.searchMemories,
-		inputSchema: z.object({
-			informationToGet: z
-				.string()
-				.describe(PARAMETER_DESCRIPTIONS.informationToGet),
-			includeFullDocs: z
-				.boolean()
-				.optional()
-				.default(DEFAULT_VALUES.includeFullDocs)
-				.describe(PARAMETER_DESCRIPTIONS.includeFullDocs),
-			limit: z
-				.number()
-				.optional()
-				.default(DEFAULT_VALUES.limit)
-				.describe(PARAMETER_DESCRIPTIONS.limit),
-		}),
+		parameters: schema,
+		// @ts-expect-error - Zod v4 compatibility with AI SDK v5
 		execute: async ({
 			informationToGet,
-			includeFullDocs = DEFAULT_VALUES.includeFullDocs,
-			limit = DEFAULT_VALUES.limit,
+			includeFullDocs,
+			limit,
+		}: {
+			informationToGet: string
+			includeFullDocs?: boolean
+			limit?: number
 		}) => {
 			try {
 				const response = await client.search.execute({
 					q: informationToGet,
 					containerTags,
-					limit,
+					limit: limit ?? DEFAULT_VALUES.limit,
 					chunkThreshold: DEFAULT_VALUES.chunkThreshold,
-					includeFullDocs,
+					includeFullDocs: includeFullDocs ?? DEFAULT_VALUES.includeFullDocs,
 				})
 
 				return {
@@ -78,12 +85,15 @@ export const addMemoryTool = (
 
 	const containerTags = getContainerTags(config)
 
+	const schema = z.object({
+		memory: z.string().describe(PARAMETER_DESCRIPTIONS.memory),
+	})
+
 	return tool({
 		description: TOOL_DESCRIPTIONS.addMemory,
-		inputSchema: z.object({
-			memory: z.string().describe(PARAMETER_DESCRIPTIONS.memory),
-		}),
-		execute: async ({ memory }) => {
+		parameters: schema,
+		// @ts-expect-error - Zod v4 compatibility with AI SDK v5
+		execute: async ({ memory }: { memory: string }) => {
 			try {
 				const metadata: Record<string, string | number | boolean> = {}
 

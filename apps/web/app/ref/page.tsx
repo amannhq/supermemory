@@ -1,15 +1,14 @@
-"use client";
+"use client"
 
-import { Button } from "@ui/components/button";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@ui/components/card";
-import { ShareIcon } from "lucide-react";
-import Link from "next/link";
+} from "@ui/components/card"
+import { ShareIcon } from "lucide-react"
+import Link from "next/link"
 
 export default function ReferralHomePage() {
 	return (
@@ -52,5 +51,5 @@ export default function ReferralHomePage() {
 				</CardContent>
 			</Card>
 		</div>
-	);
+	)
 }

@@ -53,13 +53,6 @@ export class ClaudeMemoryTool {
 		return path.replace(/\//g, "--")
 	}
 
-	/**
-	 * Convert customId back to file path (replace -- with /)
-	 */
-	private customIdToPath(customId: string): string {
-		return customId.replace(/--/g, "/")
-	}
-
 	constructor(apiKey: string, config?: ClaudeMemoryConfig) {
 		this.client = new Supermemory({
 			apiKey,
@@ -176,7 +169,7 @@ export class ClaudeMemoryTool {
 		// If path ends with / or is exactly /memories, it's a directory listing request
 		if (path.endsWith("/") || path === "/memories") {
 			// Normalize path to end with /
-			const dirPath = path.endsWith("/") ? path : path + "/"
+			const dirPath = path.endsWith("/") ? path : `${path}/`
 			return await this.listDirectory(dirPath)
 		}
 
@@ -221,7 +214,7 @@ export class ClaudeMemoryTool {
 				const slashIndex = relativePath.indexOf("/")
 				if (slashIndex > 0) {
 					// It's a subdirectory
-					dirs.add(relativePath.substring(0, slashIndex) + "/")
+					dirs.add(`${relativePath.substring(0, slashIndex)}/`)
 				} else if (relativePath !== "") {
 					// It's a file in this directory
 					files.push(relativePath)
@@ -329,7 +322,7 @@ export class ClaudeMemoryTool {
 		try {
 			const normalizedId = this.normalizePathToCustomId(filePath)
 
-			const response = await this.client.memories.add({
+			const _response = await this.client.memories.add({
 				content: fileText,
 				customId: normalizedId,
 				containerTags: this.containerTags,
@@ -388,7 +381,7 @@ export class ClaudeMemoryTool {
 
 			// Update the document
 			const normalizedId = this.normalizePathToCustomId(filePath)
-			const updateResponse = await this.client.memories.add({
+			const _updateResponse = await this.client.memories.add({
 				content: newContent,
 				customId: normalizedId,
 				containerTags: this.containerTags,

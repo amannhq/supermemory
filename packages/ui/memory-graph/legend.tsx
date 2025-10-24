@@ -54,7 +54,7 @@ export const Legend = memo(function Legend({
 	const [isExpanded, setIsExpanded] = useState(true);
 	const [isInitialized, setIsInitialized] = useState(false);
 
-	const relationData = isExperimental
+	const _relationData = isExperimental
 		? [
 				["updates", colors.relations.updates],
 				["extends", colors.relations.extends],

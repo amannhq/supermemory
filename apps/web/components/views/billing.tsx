@@ -37,7 +37,10 @@ export function BillingView() {
 	const memoriesUsed = memoriesCheck?.usage ?? 0
 	const memoriesLimit = memoriesCheck?.included_usage ?? 0
 
-	const { data: connectionsCheck } = fetchConnectionsFeature(autumn, !autumn.isLoading && !isCheckingStatus)
+	const { data: connectionsCheck } = fetchConnectionsFeature(
+		autumn,
+		!autumn.isLoading && !isCheckingStatus,
+	)
 
 	const connectionsUsed = connectionsCheck?.usage ?? 0
 
@@ -117,9 +120,7 @@ export function BillingView() {
 					<div className="space-y-2">
 						<div className="flex justify-between items-center">
 							<span className="text-sm text-muted-foreground">Memories</span>
-							<span className="text-sm text-foreground">
-								Unlimited
-							</span>
+							<span className="text-sm text-foreground">Unlimited</span>
 						</div>
 					</div>
 					<div className="space-y-2">

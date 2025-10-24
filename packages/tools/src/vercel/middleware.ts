@@ -9,7 +9,8 @@ import { convertProfileToMarkdown, type ProfileStructure } from "./util"
 
 const getLastUserMessage = (params: LanguageModelV2CallOptions) => {
 	const lastUserMessage = params.prompt
-		.slice().reverse()
+		.slice()
+		.reverse()
 		.find((prompt: LanguageModelV2Message) => prompt.role === "user")
 	const memories = lastUserMessage?.content
 		.filter((content) => content.type === "text")
@@ -70,7 +71,8 @@ const addSystemPrompt = async (
 	const queryText =
 		mode !== "profile"
 			? params.prompt
-			.slice().reverse()
+					.slice()
+					.reverse()
 					.find((prompt) => prompt.role === "user")
 					?.content?.filter((content) => content.type === "text")
 					?.map((content) => (content.type === "text" ? content.text : ""))
@@ -150,7 +152,6 @@ const getConversationContent = (params: LanguageModelV2CallOptions) => {
 		.join("\n\n")
 }
 
-
 const addMemoryTool = async (
 	client: Supermemory,
 	containerTag: string,
@@ -183,7 +184,7 @@ export const createSupermemoryMiddleware = (
 	conversationId?: string,
 	verbose = false,
 	mode: "profile" | "query" | "full" = "profile",
-	addMemory: "always" | "never" = "never"
+	addMemory: "always" | "never" = "never",
 ): LanguageModelV2Middleware => {
 	const logger = createLogger(verbose)
 

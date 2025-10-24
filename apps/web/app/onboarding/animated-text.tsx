@@ -1,5 +1,4 @@
 "use client"
-import { useEffect } from "react"
 import { TextEffect } from "@/components/text-effect"
 
 export function AnimatedText({

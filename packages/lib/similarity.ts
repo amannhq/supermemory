@@ -21,8 +21,8 @@ export const cosineSimilarity = (
 		if (
 			typeof vectorAi !== "number" ||
 			typeof vectorBi !== "number" ||
-			isNaN(vectorAi) ||
-			isNaN(vectorBi)
+			Number.isNaN(vectorAi) ||
+			Number.isNaN(vectorBi)
 		) {
 			throw new Error("Vectors must contain only numbers")
 		}

@@ -165,9 +165,9 @@ export const GraphWebGLCanvas = memo<GraphCanvasProps>(
 				.replace(/\s+/g, "")
 				.match(/rgba?\((\d+),(\d+),(\d+)(?:,(\d*\.?\d+))?\)/i);
 			if (rgbaMatch) {
-				const r = Number.parseInt(rgbaMatch[1] || "0");
-				const g = Number.parseInt(rgbaMatch[2] || "0");
-				const b = Number.parseInt(rgbaMatch[3] || "0");
+				const r = Number.parseInt(rgbaMatch[1] || "0", 10);
+				const g = Number.parseInt(rgbaMatch[2] || "0", 10);
+				const b = Number.parseInt(rgbaMatch[3] || "0", 10);
 				const a =
 					rgbaMatch[4] !== undefined ? Number.parseFloat(rgbaMatch[4]) : 1;
 				return { hex: (r << 16) + (g << 8) + b, alpha: a };
